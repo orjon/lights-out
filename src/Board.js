@@ -31,7 +31,7 @@ import './Board.css';
 
 class Board extends Component {
   static defaultProps = {
-    nrows: 4,
+    nrows: 5,
     ncols: 5,
     chanceLightStartsOn: .20
   }
@@ -102,14 +102,17 @@ class Board extends Component {
   /** Render game board or winning message. */
 
   render() {
-    this.createBoard()
     return(
+    <div className='BoardContainer'>    
       <table>
         <tbody>
           {this.generateBoard()}
         </tbody>
       </table>
+    </div>
     );
+    this.createBoard()
+
     // if the game is won, just show a winning msg & render nothing else
 
     // TODO
