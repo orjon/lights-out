@@ -2,15 +2,19 @@
   text-align: center;
   background-color: #282c34;
   height: 100vh;
-  border: 0px solid orange;
+  border: 1px solid orange;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.App h1 {
+  border: 1px solid cyan;
+}
+
 .App-body {
-  border: 0px solid cyan;
+  border: 1px solid cyan;
   display: flex;
   flex-direction: column;
   align-items: center;
