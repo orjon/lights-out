@@ -33,17 +33,15 @@ class Board extends Component {
   static defaultProps = {
     nrows: 5,
     ncols: 5,
-    chanceLightStartsOn: .20
-  }
+    chanceLightStartsOn: .35
+  };
 
   constructor(props) {
     super(props);
     this.state = {
       hasWon: false,
       board: this.createBoard()
-    }
-
-    // TODO: set initial state
+    };
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
@@ -57,7 +55,7 @@ class Board extends Component {
       }
       board.push(row)
     }
-
+    console.log('board');
     console.log(board);  
     // TODO: create array-of-arrays of true/false values
 
@@ -88,25 +86,39 @@ class Board extends Component {
     // this.setState({board, hasWon}); 
   }
 
-  generateBoard() {
-    return this.state.board.map(row => (
-      <tr>
-        {row.map(cell => (
-          <Cell isLit={cell} />
-        ))}
-      </tr>
-    ))
-  }
+  // generateBoard() {
+  //   return this.state.board.map((row, rowIndex) => (
+  //     // console.log('row'),
+  //     // console.log(index),
+  //     <tr key={rowIndex}>
+  //       {row.map((cell, cellIndex) => (
+  //         // console.log('cell'),
+  //         // console.log(index),
+  //         <Cell key={coord} isLit={cell} />
+  //       ))}
+  //     </tr>
+  //   ))
+  // }
 
 
   /** Render game board or winning message. */
 
   render() {
+
+    let boardTable = [];
+    for (let r= 0; r < this.props.nrows; r++){
+      let row=[];
+      for (let c=0; c <this.props.ncols; c++){
+        let coord = `${r}-${c}`
+        row.push(<Cell key={coord} isLit={this.state.board[r][c]} />)
+      }
+      boardTable.push(<tr key={r}>{row}</tr>)
+    }
     return(
     <div className='BoardContainer'>    
       <table>
         <tbody>
-          {this.generateBoard()}
+          {boardTable}
         </tbody>
       </table>
     </div>
