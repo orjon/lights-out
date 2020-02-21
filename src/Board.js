@@ -33,7 +33,7 @@ class Board extends Component {
   static defaultProps = {
     nrows: 5,
     ncols: 5,
-    chanceLightStartsOn: .35
+    chanceLightStartsOn: .05
   };
 
   constructor(props) {
@@ -65,6 +65,7 @@ class Board extends Component {
   /** handle changing a cell: update board & determine if winner */
 
   flipCellsAround(coord) {
+    console.log('flipping: '+coord);
     let {ncols, nrows} = this.props;
     let board = this.state.board;
     let [y, x] = coord.split("-").map(Number);
@@ -78,27 +79,17 @@ class Board extends Component {
       }
     }
 
-    // TODO: flip this cell and the cells around it
-
-    // win when every cell is turned off
-    // TODO: determine is the game has been won
-
-    // this.setState({board, hasWon}); 
+    flipCell(y,x);
+    flipCell(y-1,x);
+    flipCell(y+1,x);
+    flipCell(y,x-1);
+    flipCell(y,x+1);
+    let hasWon = board.every(row => row.every(cell => !cell ))
+    this.setState({board, hasWon}); 
+    
   }
 
-  // generateBoard() {
-  //   return this.state.board.map((row, rowIndex) => (
-  //     // console.log('row'),
-  //     // console.log(index),
-  //     <tr key={rowIndex}>
-  //       {row.map((cell, cellIndex) => (
-  //         // console.log('cell'),
-  //         // console.log(index),
-  //         <Cell key={coord} isLit={cell} />
-  //       ))}
-  //     </tr>
-  //   ))
-  // }
+
 
 
   /** Render game board or winning message. */
@@ -110,7 +101,7 @@ class Board extends Component {
       let row=[];
       for (let c=0; c <this.props.ncols; c++){
         let coord = `${r}-${c}`
-        row.push(<Cell key={coord} isLit={this.state.board[r][c]} />)
+        row.push(<Cell key={coord} isLit={this.state.board[r][c]} flipCellsAroundMe={() => this.flipCellsAround(coord)} />)
       }
       boardTable.push(<tr key={r}>{row}</tr>)
     }
@@ -123,19 +114,8 @@ class Board extends Component {
       </table>
     </div>
     );
-    this.createBoard()
-
-    // if the game is won, just show a winning msg & render nothing else
-
-    // TODO
-
-    // make table board
-
-    // TODO
   }
 }
 
 
 export default Board;
-
-
